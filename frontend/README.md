@@ -29,3 +29,25 @@ npm run dev
 Open the app at:
 
 http://localhost:5173/
+
+## Implemented Functionality
+
+### Core Features
+- Fetch and display all users from the API (`GET /users`)
+- Navigate to a user detail page when clicking a user
+- Display full user details
+- Delete a user (`DELETE /users/:id`)
+- Responsive layout and clean UI structure
+
+### Bonus Features
+- Search/filter users by name or email
+- Add new user functionality (`POST /users`)
+- Edit user details (`PUT /users/:id`)
+- Basic pagination
+- Loading and error states
+- Reusable components and modular file structure
+
+### Technical Details
+- Axios for API communication
+- React Router for navigation
+- Component-based architecture with hooks
