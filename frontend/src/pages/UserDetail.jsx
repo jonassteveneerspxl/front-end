@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getUser, deleteUser } from "../api/users";
+import { getUser, deleteUser, updateUser } from "../api/users";
+import UserForm from "../components/UserForm";
 
 function TypeBadge({ type }) {
   const t = (type || "").toLowerCase();
@@ -22,6 +23,7 @@ export default function UserDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(() => {
     getUser(id).then(res => setUser(res.data));
@@ -54,6 +56,7 @@ export default function UserDetail() {
         </div>
 
         <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <button className="btn-edit" onClick={() => setShowEdit(true)}>Edit</button>
           <Link to="/" className="btn-ghost">Back</Link>
           <button onClick={handleDelete} className="btn-danger">Delete user</button>
         </div>
@@ -64,7 +67,6 @@ export default function UserDetail() {
           <div className="detail-card">
             <div className="card-header">
               <h3>Personal information</h3>
-              <button className="btn-edit">Edit</button>
             </div>
 
             <div className="card-body">
@@ -102,7 +104,6 @@ export default function UserDetail() {
           <div className="detail-card">
             <div className="card-header">
               <h3>Company</h3>
-              <button className="btn-edit">Edit</button>
             </div>
 
             <div className="card-body">
@@ -145,6 +146,29 @@ export default function UserDetail() {
           </div>
         </section>
       </main>
+
+      {showEdit && (
+        <div className="modal-bg" onClick={() => setShowEdit(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <UserForm
+              initial={user}
+              onClose={() => setShowEdit(false)}
+              onSubmit={async (data) => {
+                try {
+                  await updateUser(id, { ...user, ...data });
+                  const res = await getUser(id);
+                  setUser(res.data);
+                } catch (err) {
+                  console.error(err);
+                  alert('Failed to save user');
+                }
+                setShowEdit(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

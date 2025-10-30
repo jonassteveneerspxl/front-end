@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
-export default function UserForm({ onClose, onSubmit }) {
-	const [form, setForm] = useState({
-		type: "service",
-		status: "deactivated",
-		firstName: "",
-		lastName: "",
-		email: "",
-		phone: "",
-		bio: "",
-		companyName: "",
-		country: "",
-		city: "",
-		postalCode: "",
-		address: "",
-		vatNumber: ""
-	});
+export default function UserForm({ onClose, onSubmit, initial = null }) {
+  const [form, setForm] = useState({
+    type: "service",
+    status: "deactivated",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    bio: "",
+    companyName: "",
+    country: "",
+    city: "",
+    postalCode: "",
+    address: "",
+    vatNumber: ""
+  });
+
+  useEffect(() => {
+    if (initial) {
+      setForm(f => ({ ...f, ...initial }));
+    }
+  }, [initial]);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -31,7 +37,7 @@ export default function UserForm({ onClose, onSubmit }) {
 
 		return (
 			<form className="user-form" onSubmit={handleSubmit}>
-				<h2>Create User</h2>
+				<h2>{initial ? 'Edit User' : 'Create User'}</h2>
 				<div className="form-row">
 					<label>Type</label>
 					<select name="type" value={form.type} onChange={handleChange}>
