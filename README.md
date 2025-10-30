@@ -25,6 +25,10 @@ Once running, you can fetch user data with:
 curl http://localhost:3000/users
 ```
 
+## Go to /frontend for solution and readme
+
+In this folder, you wil find my solution of the assignment with further setup and usage instructions in the readme.md file.
+
 ## Designs and Wireframes
 
 **The provided designs are guidelines** and should be treated as wireframes. Pixel-perfect implementation is not required. You can find design images in the `/designs` folder, and a Figma file is available for import into your own Figma account (free accounts are supported).
@@ -59,3 +63,5 @@ Create a page that shows all details for a specific user, with an option to dele
 #### Bonus Features
 
 - Edit user details
+
+
