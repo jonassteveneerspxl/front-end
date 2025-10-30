@@ -1,13 +1,38 @@
 import { useEffect, useState } from "react";
 import { getUsers } from "../api/users";
 import UserCard from "../components/UserCard";
+import UserForm from "../components/UserForm";
+
+function Modal({ children, onClose }) {
+  useEffect(() => {
+    function handleKey(e) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
+  function handleBgClick(e) {
+    if (e.target.classList.contains("modal-bg")) onClose();
+  }
+
+  return (
+    <div className="modal-bg" onClick={handleBgClick}>
+      <div className="modal">
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
   const [query, setQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [companyFilter, setCompanyFilter] = useState("all");
   const [page, setPage] = useState(1);
+  const [showForm, setShowForm] = useState(false);
   const pageSize = 10;
 
   useEffect(() => {
@@ -21,6 +46,7 @@ export default function UsersList() {
     if (q && !(fullName.includes(q) || email.includes(q) || (u.companyName || "").toLowerCase().includes(q))) return false;
     if (typeFilter !== "all" && ((u.type || "").toLowerCase() !== typeFilter)) return false;
     if (statusFilter !== "all" && ((u.status || "").toLowerCase() !== statusFilter)) return false;
+    if (companyFilter !== "all" && ((u.companyName || "").toLowerCase() !== companyFilter)) return false;
     return true;
   });
 
@@ -61,16 +87,21 @@ export default function UsersList() {
             </select>
 
             <label className="filter-label">Company</label>
-            <select className="filter-select" value="all" onChange={() => {}}>
+            <select className="filter-select" value={companyFilter} onChange={(e) => { setCompanyFilter(e.target.value); setPage(1); }}>
               <option value="all">All</option>
+              {Array.from(new Set(users.map(u => (u.companyName || "").trim()).filter(Boolean))).sort().map((c) => (
+                <option key={c} value={c.toLowerCase()}>
+                  {c}
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            
+
           </div>
           <div className="users-controls">
-          <button className="create-btn">+ Create new</button>
-        </div>
+            <button className="create-btn" onClick={() => setShowForm(true)}>+ Create new</button>
+          </div>
         </div>
 
         <div className="list-scroll">
@@ -90,6 +121,26 @@ export default function UsersList() {
             {filtered.length === 0 && <div className="no-results">No users found.</div>}
           </div>
         </div>
+
+        {showForm && (
+          <Modal onClose={() => setShowForm(false)}>
+            <UserForm
+              onClose={() => setShowForm(false)}
+              onSubmit={async (data) => {
+                try {
+                  const { addUser } = await import("../api/users");
+                  await addUser(data);
+                  const res = await getUsers();
+                  setUsers(res.data || []);
+                } catch (err) {
+                  alert("Failed to add user");
+                }
+                setShowForm(false);
+              }}
+            />
+          </Modal>
+        )}
+
 
         <footer className="users-pagination">
           <div className="pagination-controls">

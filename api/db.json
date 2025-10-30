@@ -49,38 +49,6 @@
       "vatNumber": "BE 0631.879.378"
     },
     {
-      "id": 3,
-      "type": "service",
-      "status": "active",
-      "firstName": "Debra",
-      "lastName": "Lee",
-      "email": "debralee@obones.com",
-      "phone": "(940) 597-2776",
-      "bio": "Ullamco ipsum enim nisi tempor incididunt sint nisi. Et ea in cupidatat elit non ipsum irure quis officia eiusmod magna est. Aute sit tempor veniam voluptate nisi. Ea commodo fugiat sint excepteur minim exercitation ullamco sint.\r\n",
-      "companyName": "Exostream",
-      "country": "Bahrain",
-      "city": "Linganore",
-      "postalCode": 3500,
-      "address": "Bassett Avenue",
-      "vatNumber": "BE 0631.879.378"
-    },
-    {
-      "id": 4,
-      "type": "service",
-      "status": "deactivated",
-      "firstName": "Wilkinson",
-      "lastName": "Fleming",
-      "email": "wilkinsonfleming@exostream.com",
-      "phone": "(862) 464-2651",
-      "bio": "Ut consequat ullamco ut sint nostrud est sit id aliqua laboris esse nostrud. Exercitation Lorem mollit aute excepteur enim non qui nulla enim nostrud labore. Sit Lorem non anim anim labore aliqua incididunt occaecat. Enim aute excepteur mollit reprehenderit magna nisi sunt nisi velit duis nisi culpa veniam commodo. Culpa irure excepteur voluptate laborum proident. Tempor anim magna laborum non ea fugiat aliquip sit deserunt officia adipisicing esse in. Magna aute eu magna minim minim nulla mollit elit nostrud dolore ex ullamco culpa est.\r\n",
-      "companyName": "Envire",
-      "country": "Christmas Island",
-      "city": "Nicut",
-      "postalCode": 3500,
-      "address": "Jay Street",
-      "vatNumber": "BE 0631.879.378"
-    },
-    {
       "id": 5,
       "type": "service",
       "status": "deactivated",

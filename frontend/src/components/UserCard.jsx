@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function TypeBadge({ type }) {
 	const t = (type || "").toLowerCase();
@@ -19,8 +19,22 @@ function StatusLabel({ status }) {
 export default function UserCard({ user }) {
 	const name = `${user.firstName || ""} ${user.lastName || ""}`.trim();
 
+	const navigate = useNavigate();
+
+	const handleClick = (e) => {
+		if (e.target.closest('a') || e.target.closest('button')) return;
+		navigate(`/users/${user.id}`);
+	};
+
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			navigate(`/users/${user.id}`);
+		}
+	};
+
 	return (
-		<article className="user-row">
+		<article className="user-row" role="button" tabIndex={0} onClick={handleClick} onKeyDown={handleKeyDown}>
 			<div className="col name-col">
 				<div className="name-main">
 					<Link to={`/users/${user.id}`} className="name-link">{name || user.email}</Link>
